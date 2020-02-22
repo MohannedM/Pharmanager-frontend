@@ -1,0 +1,14 @@
+.AuthLayout{
+    min-height: 100vh;
+}
+
+.FormContainer{
+    min-height: 70vh;
+    margin: auto 0;
+}
+
+@media(max-width: 576px){
+    .AuthLayout{
+        display: none;
+    }
+}
