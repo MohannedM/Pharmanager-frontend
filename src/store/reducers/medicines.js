@@ -3,7 +3,8 @@ const initalState = {
     medicines: [],
     loading: false,
     error: null,
-    redirect: false
+    redirect: false,
+    isFirstLoad: true
 }
 
 const reducer = (state = initalState, action)=>{
@@ -35,6 +36,24 @@ const reducer = (state = initalState, action)=>{
             return{
                 ...state,
                 redirect: false
+            }
+        case actionTypes.GET_MEDICINES_START:
+            return{
+                ...state,
+                loading: true
+            }
+        case actionTypes.GET_MEDICINES_SUCCESS:
+            return{
+                ...state,
+                loading: false,
+                medicines: [...state.medicines, ...action.medicines],
+                isFirstLoad: false
+            }
+        case actionTypes.GET_MEDICINES_FAIL:
+            return{
+                ...state,
+                loading: false,
+                error: action.error
             }
         default: return state;
     }

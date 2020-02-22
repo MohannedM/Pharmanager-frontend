@@ -1,42 +1,64 @@
 import React, {Component} from 'react';
 import { Row, Col } from 'react-bootstrap';
 import MedicineCard from '../../../components/MedicineCard/MedicineCard';
-import { medicinesReached } from '../../../store/actions';
+import { medicinesReached, getMedicines, medicinesDismissError } from '../../../store/actions';
 import { connect } from 'react-redux';
+import CustomModal from '../../../components/CustomModal/CustomModal';
+import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 
-
-const medicines = [
-    {name: "Panadol", expDate: "20/10/2021", price: "7.5", quantity: 75, description: "The best medicine in town doctors recommend it from all over the world"},
-    {name: "Hemojet", expDate: "20/07/2020", price: "20", quantity: 50, description: "The best medicine in town doctors recommend it from all over the world"},
-    {name: "Depvoit", expDate: "05/10/2020", price: "5", quantity: 52, description: "The best medicine in town doctors recommend it from all over the world"},
-    {name: "Strepciles", expDate: "01/01/2022", price: "45", quantity: 70, description: "The best medicine in town doctors recommend it from all over the world"}
-];
 
 class Medicines extends Component{
     componentDidMount(){
         this.props.onMedicinesReached();
+        if(this.props.isFirstLoad){
+            this.props.onGetMedicines(this.props.token);
+        }
     }
+
+            
+    handleModalClose = () => {
+        this.props.onDismissError();
+    }
+
     render(){
-        const medicineComponents = medicines.map(medicine=>{
+        const medicineComponents = this.props.medicines.map(medicine=>{
             return(
-                <Col  key={medicine.name} className="m-3" xs={12} lg={3}>
+                <Col  key={medicine._id} className="m-3" xs={12} lg={3}>
                     <MedicineCard medicine={medicine}></MedicineCard>
                 </Col>
 
             )
         });
+        let spinner = <LoadingSpinner />;
+        if(!this.props.isLoading){
+            spinner = null;
+        }
         return(
             <Row>
+                <CustomModal show={this.props.isError ? true : false} handleClose={this.handleModalClose} modalBody={this.props.isError} />
+                {spinner}
                 {medicineComponents}
             </Row>
         );
     }
 } 
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
     return{
-        onMedicinesReached: () => dispatch(medicinesReached())
+        medicines: state.medicines.medicines,
+        isFirstLoad: state.medicines.isFirstLoad,
+        isLoading: state.medicines.loading,
+        isError: state.medicines.error,
+        token: state.auth.token
     }
 }
 
-export default connect(null, mapDispatchToProps)(Medicines);
+const mapDispatchToProps = dispatch => {
+    return{
+        onMedicinesReached: () => dispatch(medicinesReached()),
+        onGetMedicines: (token) => dispatch(getMedicines(token)),
+        onDismissError: () => dispatch(medicinesDismissError())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Medicines);
