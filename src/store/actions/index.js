@@ -10,5 +10,10 @@ export {
     getMedicines,
     getMedicinesFail,
     getMedicinesStart,
-    getMedicinesSuccess
+    getMedicinesSuccess,
+    editMedicine,
+    editMedicineFail,
+    editMedicineStart,
+    editMedicineSuccess,
+    editMedicineFeilds
 } from './medicines';

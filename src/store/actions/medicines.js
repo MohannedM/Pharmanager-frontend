@@ -67,3 +67,39 @@ export const getMedicinesFail = error => {
         error
     }
 }
+
+export const editMedicineFeilds = (medicineData) => {
+    return{
+        type: actionTypes.EDIT_MEDICINE_FIELDS,
+        medicineData
+    }
+}
+
+export const editMedicine = (medicineData, medicineId, token) => {
+    return{
+        type: actionTypes.EDIT_MEDICINE,
+        medicineData,
+        medicineId,
+        token
+    }
+}
+
+export const editMedicineStart = () => {
+    return{
+        type: actionTypes.EDIT_MEDICINE_START
+    }
+}
+
+export const editMedicineSuccess = () => {
+    return{
+        type: actionTypes.EDIT_MEDICINE_SUCCESS
+    }
+}
+
+
+export const editMedicineFail = error => {
+    return{
+        type: actionTypes.EDIT_MEDICINE_FAIL,
+        error
+    }
+}

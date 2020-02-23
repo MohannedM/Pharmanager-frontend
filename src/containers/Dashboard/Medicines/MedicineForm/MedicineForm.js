@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import {Form, Button } from 'react-bootstrap';
 import Auxiliary from '../../../../hoc/Auxiliary/Auxiliary';
 import { connect } from 'react-redux';
-import { createMedicine, medicinesDismissError } from '../../../../store/actions';
+import { createMedicine, medicinesDismissError, editMedicine } from '../../../../store/actions';
 import { Redirect } from 'react-router-dom';
 import CustomModal from '../../../../components/CustomModal/CustomModal';
 
 
-class AddMedicine extends Component{
+class MedicineForm extends Component{
         setName = (event) =>{
             if(event.target.value.length <= 25 && event.target.value.length >= 4){
                 this.setState({name: {...this.state.name, value: event.target.value, touched: true, error: false}});
@@ -25,6 +25,7 @@ class AddMedicine extends Component{
         setExpirationDate = (event) =>{
             if(event.target.value.length <= 25 && event.target.value.length >= 1){
                 this.setState({expirationDate: {...this.state.expirationDate, value: event.target.value, touched: true, error: false, message: ''}});
+                console.log(event.target.value);
             }else{
                 this.setState({expirationDate: {...this.state.expirationDate, value: event.target.value, touched: true, error: true, message: 'Please choose an expiration date.'}});
             }
@@ -101,11 +102,27 @@ class AddMedicine extends Component{
                 quantity: this.state.quantity.value,
                 price: this.state.price.value
             }
-            this.props.onCreateMedicine(medicineData, this.props.token);
+            if(this.props.isEditing){
+                this.props.onEditMedicine(medicineData, this.props.medicineData._id, this.props.token)
+            }else{
+                this.props.onCreateMedicine(medicineData, this.props.token);
+            }
         }
         
         handleModalClose = () => {
             this.props.onDismissError();
+        }
+
+        componentDidMount(){
+            if(this.props.isEditing){
+                const inputs = {...this.state};
+                for(let input in inputs){
+                    this.setState({[input]: {...this.state[input], value: this.props.medicineData[input], error: false, touched: true}})
+                }
+                let expDate = new Date(this.props.medicineData.expirationDate)
+                let setDate = expDate.toLocaleDateString('en-CA');
+                this.setState({expirationDate: {...this.state.expirationDate, value: setDate, error: false, touched: false}})
+            }
         }
     
         render(){
@@ -117,7 +134,7 @@ class AddMedicine extends Component{
             let inputElements = inputsArray.map(inputEl => {
                 return (<Form.Group key={inputEl.placeholder}>
                     <Form.Label>{inputEl.placeholder}</Form.Label>
-                    <Form.Control type={inputEl.type} className={inputEl.error && inputEl.touched ? 'is-invalid' : ''} onChange={inputEl.changeHandler} placeholder={inputEl.placeholder} />
+                    <Form.Control type={inputEl.type} className={inputEl.error && inputEl.touched ? 'is-invalid' : ''} value={inputEl.value} onChange={inputEl.changeHandler} placeholder={inputEl.placeholder} />
                     {inputEl.error && inputEl.touched ? <p className="invalid-feedback">{inputEl.message}</p> : null}
                 </Form.Group>);
             })
@@ -132,12 +149,12 @@ class AddMedicine extends Component{
                 }
             }
     
-            let button = <Button className="primary" type="submit">Add Medicine</Button>
-            if(this.props.isAddLoading){
-                button = <Button className="primary" disabled><span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp; Loading</Button>
+            let button = <Button className={this.props.isEditing ? "secondary" : "primary"} type="submit">{this.props.isEditing ? 'Update Medicine' : 'Add Medicine'}</Button>
+            if(this.props.isLoading){
+                button = <Button className={this.props.isEditing ? "secondary" : "primary"} disabled><span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp; Loading</Button>
             }
             if(isDisabled){
-                button = <Button className="primary" disabled>Add Medicine</Button>;
+                button = <Button className={this.props.isEditing ? "secondary" : "primary"} disabled>{this.props.isEditing ? 'Update Medicine' : 'Add Medicine'}</Button>;
             }
             let redirectToAll = null;
             if(this.props.isRedirect){
@@ -147,7 +164,7 @@ class AddMedicine extends Component{
                 <Auxiliary>
                     {redirectToAll}
                     <CustomModal show={this.props.requestError ? true : false} handleClose={this.handleModalClose} modalBody={this.props.requestError} />
-                    <p className="lead">Add Medicine:</p>
+                    <p className="lead">{this.props.isEditing ? 'Edit' : 'Add'} Medicine:</p>
                     <Form onSubmit={this.submitHandler}>
                         {inputElements}
                         <Form.Group>
@@ -161,17 +178,20 @@ class AddMedicine extends Component{
 const mapStateToProps = state => {
     return{
         token: state.auth.token,
-        isAddLoading: state.medicines.loading,
+        isLoading: state.medicines.loading,
         isRedirect: state.medicines.redirect,
-        requestError: state.medicines.error
+        isEditing: state.medicines.isEditing,
+        requestError: state.medicines.error,
+        medicineData: state.medicines.medicineData
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onCreateMedicine: (medicineData, token) => dispatch(createMedicine(medicineData, token)),
+        onEditMedicine: (medicineData, medicineId, token) => dispatch(editMedicine(medicineData, medicineId, token)),
         onDismissError: () => dispatch(medicinesDismissError())
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddMedicine);
+export default connect(mapStateToProps, mapDispatchToProps)(MedicineForm);

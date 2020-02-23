@@ -1,5 +1,5 @@
 import {put} from 'redux-saga/effects';
-import {createMedicineSuccess,createMedicineStart,createMedicineFail, getMedicinesSuccess, getMedicinesStart, getMedicinesFail} from '../actions'
+import {createMedicineSuccess,createMedicineStart,createMedicineFail, getMedicinesSuccess, getMedicinesStart, getMedicinesFail, editMedicineStart, editMedicineSuccess, editMedicineFail} from '../actions'
 import axios from 'axios';
 
 export function* createMedicineSaga(action){
@@ -27,6 +27,26 @@ export function* getMedicinesSaga(action){
         });
         yield put(getMedicinesSuccess(response.data.medicines));
     }catch(error){
-        yield put(getMedicinesFail(error.response.data.message));
+        if(error.response){
+            yield put(getMedicinesFail(error.response.data.message));
+        }
+    }
+}
+
+export function* editMedicineSaga(action){
+    yield put(editMedicineStart());
+    try{
+        const response = yield axios.put("http://localhost:8080/medicines/" + action.medicineId, action.medicineData,{
+            headers: {
+                Authorization: "Bearer " + action.token
+            }
+        });
+        console.log(response)
+        yield put(editMedicineSuccess());
+    }catch(error){
+        console.log(error)
+        if(error.response){
+            yield put(editMedicineFail(error.response.data.message));
+        }
     }
 }

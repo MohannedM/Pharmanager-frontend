@@ -16,7 +16,7 @@ class MedicineCard extends Component{
                     <Card.Text>
                     {this.props.medicine.description}
                     </Card.Text>
-                    <Button block variant="secondary">Edit</Button>
+                    <Button block variant="secondary" onClick={this.props.editMedicineClicked}>Edit</Button>
                     <Button block variant="danger">Delete</Button>
                 </Card.Body>
             </Card>

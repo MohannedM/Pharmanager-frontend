@@ -4,6 +4,8 @@ const initalState = {
     loading: false,
     error: null,
     redirect: false,
+    isEditing: false,
+    medicineData: null,
     isFirstLoad: true
 }
 
@@ -35,7 +37,9 @@ const reducer = (state = initalState, action)=>{
         case actionTypes.MEDICINES_REACHED:
             return{
                 ...state,
-                redirect: false
+                redirect: false,
+                isEditing: false,
+                medicineData: null
             }
         case actionTypes.GET_MEDICINES_START:
             return{
@@ -50,6 +54,31 @@ const reducer = (state = initalState, action)=>{
                 isFirstLoad: false
             }
         case actionTypes.GET_MEDICINES_FAIL:
+            return{
+                ...state,
+                loading: false,
+                error: action.error
+            }
+        case actionTypes.EDIT_MEDICINE_FIELDS:
+            return{
+                ...state,
+                isEditing: true,
+                medicineData: action.medicineData
+            }
+        case actionTypes.EDIT_MEDICINE_START:
+            return{
+                ...state,
+                loading: true
+            }
+        case actionTypes.EDIT_MEDICINE_SUCCESS:
+            return{
+                ...state,
+                loading: false,
+                redirect: true,
+                medicines: [],
+                isFirstLoad: true
+            }
+        case actionTypes.EDIT_MEDICINE_FAIL:
             return{
                 ...state,
                 loading: false,

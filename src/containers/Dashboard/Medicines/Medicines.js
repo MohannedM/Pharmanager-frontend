@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Row, Col } from 'react-bootstrap';
 import MedicineCard from '../../../components/MedicineCard/MedicineCard';
-import { medicinesReached, getMedicines, medicinesDismissError } from '../../../store/actions';
+import { medicinesReached, getMedicines, medicinesDismissError, editMedicineFeilds } from '../../../store/actions';
 import { connect } from 'react-redux';
 import CustomModal from '../../../components/CustomModal/CustomModal';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
@@ -20,11 +20,17 @@ class Medicines extends Component{
         this.props.onDismissError();
     }
 
+    editMedicineHandler = medicineData => {
+
+        this.props.onEditMedicineFields(medicineData);
+        this.props.history.push("/medicines/edit");
+    }
+
     render(){
         const medicineComponents = this.props.medicines.map(medicine=>{
             return(
                 <Col  key={medicine._id} className="m-3" xs={12} lg={3}>
-                    <MedicineCard medicine={medicine}></MedicineCard>
+                    <MedicineCard medicine={medicine} editMedicineClicked={() => this.editMedicineHandler(medicine)}></MedicineCard>
                 </Col>
 
             )
@@ -57,7 +63,8 @@ const mapDispatchToProps = dispatch => {
     return{
         onMedicinesReached: () => dispatch(medicinesReached()),
         onGetMedicines: (token) => dispatch(getMedicines(token)),
-        onDismissError: () => dispatch(medicinesDismissError())
+        onDismissError: () => dispatch(medicinesDismissError()),
+        onEditMedicineFields: (medicineData) => dispatch(editMedicineFeilds(medicineData))
     }
 }
 
