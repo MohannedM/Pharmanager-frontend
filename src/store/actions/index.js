@@ -15,5 +15,6 @@ export {
     editMedicineFail,
     editMedicineStart,
     editMedicineSuccess,
-    editMedicineFeilds
+    editMedicineFeilds,
+    deleteMedicine
 } from './medicines';

@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 
 export const createMedicine = (medicineData, token) => {
-    return{
+    return {
         type: actionTypes.CREATE_MEDICINE,
         medicineData,
         token
@@ -9,13 +9,13 @@ export const createMedicine = (medicineData, token) => {
 }
 
 export const createMedicineStart = () => {
-    return{
+    return {
         type: actionTypes.CREATE_MEDICINE_START
     }
 }
 
 export const createMedicineSuccess = (medicineData) => {
-    return{
+    return {
         type: actionTypes.CREATE_MEDICINE_SUCCESS,
         medicineData
     }
@@ -23,60 +23,60 @@ export const createMedicineSuccess = (medicineData) => {
 
 
 export const createMedicineFail = error => {
-    return{
+    return {
         type: actionTypes.CREATE_MEDICINE_FAIL,
         error
     }
 }
 
 export const medicinesReached = () => {
-    return{
+    return {
         type: actionTypes.MEDICINES_REACHED
     }
 }
 
 export const medicinesDismissError = () => {
-    return{
+    return {
         type: actionTypes.MEDICINES_DISMISS_ERROR
     }
 }
 
 export const getMedicines = token => {
-    return{
+    return {
         type: actionTypes.GET_MEDICINES,
         token
     }
 }
 
 export const getMedicinesStart = () => {
-    return{
+    return {
         type: actionTypes.GET_MEDICINES_START
     }
 }
 
 export const getMedicinesSuccess = medicines => {
-    return{
+    return {
         type: actionTypes.GET_MEDICINES_SUCCESS,
         medicines
     }
 }
 
 export const getMedicinesFail = error => {
-    return{
+    return {
         type: actionTypes.GET_MEDICINES_FAIL,
         error
     }
 }
 
 export const editMedicineFeilds = (medicineData) => {
-    return{
+    return {
         type: actionTypes.EDIT_MEDICINE_FIELDS,
         medicineData
     }
 }
 
 export const editMedicine = (medicineData, medicineId, token) => {
-    return{
+    return {
         type: actionTypes.EDIT_MEDICINE,
         medicineData,
         medicineId,
@@ -85,21 +85,29 @@ export const editMedicine = (medicineData, medicineId, token) => {
 }
 
 export const editMedicineStart = () => {
-    return{
+    return {
         type: actionTypes.EDIT_MEDICINE_START
     }
 }
 
 export const editMedicineSuccess = () => {
-    return{
+    return {
         type: actionTypes.EDIT_MEDICINE_SUCCESS
     }
 }
 
 
 export const editMedicineFail = error => {
-    return{
+    return {
         type: actionTypes.EDIT_MEDICINE_FAIL,
         error
+    }
+}
+
+export const deleteMedicine = (medicineId, token) => {
+    return {
+        type: actionTypes.DELETE_MEDICINE,
+        medicineId,
+        token
     }
 }

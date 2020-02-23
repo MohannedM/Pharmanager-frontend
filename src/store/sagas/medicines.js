@@ -50,3 +50,24 @@ export function* editMedicineSaga(action){
         }
     }
 }
+
+export function* deleteMedicineSaga(action){
+    yield put(getMedicinesStart());
+    try{
+        yield axios.delete("http://localhost:8080/medicines/" + action.medicineId, {
+            headers: {
+                Authorization: "Bearer " + action.token
+            }
+        });
+        const response = yield axios.get("http://localhost:8080/medicines", {
+            headers: {
+                Authorization: "Bearer " + action.token
+            }
+        });
+        yield put(getMedicinesSuccess(response.data.medicines));
+    }catch(error){
+        if(error.response){
+            yield put(getMedicinesFail(error.response.data.message));
+        }
+    }
+}

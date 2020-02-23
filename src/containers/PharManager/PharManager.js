@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Logout from '../Auth/Logout/Logout';
 import { authInit } from '../../store/actions';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
-import NotFound from '../NotFound/NotFound';
+// import NotFound from '../NotFound/NotFound';
 
 const Auth = asyncComponent(()=>{
   return import('../Auth/Auth');
@@ -25,7 +25,8 @@ class PharManager extends Component{
           <Route path="/login" component={Auth} />
           <Route path="/signup" component={Auth} />
           <Route path="/" exact component={LandingPage} />
-          <Route path="/" component={NotFound} />
+          {/* <Route path="/" component={NotFound} /> */}
+          <Redirect to="/" />
         </Switch>
     );
     if(this.props.isAuth){

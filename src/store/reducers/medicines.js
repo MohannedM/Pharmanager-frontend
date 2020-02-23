@@ -44,7 +44,8 @@ const reducer = (state = initalState, action)=>{
         case actionTypes.GET_MEDICINES_START:
             return{
                 ...state,
-                loading: true
+                loading: true,
+                medicines: []
             }
         case actionTypes.GET_MEDICINES_SUCCESS:
             return{

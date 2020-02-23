@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Row, Col } from 'react-bootstrap';
 import MedicineCard from '../../../components/MedicineCard/MedicineCard';
-import { medicinesReached, getMedicines, medicinesDismissError, editMedicineFeilds } from '../../../store/actions';
+import { medicinesReached, getMedicines, medicinesDismissError, editMedicineFeilds, deleteMedicine } from '../../../store/actions';
 import { connect } from 'react-redux';
 import CustomModal from '../../../components/CustomModal/CustomModal';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
@@ -21,16 +21,23 @@ class Medicines extends Component{
     }
 
     editMedicineHandler = medicineData => {
-
         this.props.onEditMedicineFields(medicineData);
         this.props.history.push("/medicines/edit");
+    }
+
+    deleteMedicineHandler = (medicineId) => {
+        this.props.onDeleteMedicine(medicineId, this.props.token)
     }
 
     render(){
         const medicineComponents = this.props.medicines.map(medicine=>{
             return(
                 <Col  key={medicine._id} className="m-3" xs={12} lg={3}>
-                    <MedicineCard medicine={medicine} editMedicineClicked={() => this.editMedicineHandler(medicine)}></MedicineCard>
+                    <MedicineCard 
+                    medicine={medicine} 
+                    editMedicineClicked={()=>this.editMedicineHandler(medicine)}
+                    deleteMedicineClicked={()=>this.deleteMedicineHandler(medicine._id)} 
+                    ></MedicineCard>
                 </Col>
 
             )
@@ -64,7 +71,8 @@ const mapDispatchToProps = dispatch => {
         onMedicinesReached: () => dispatch(medicinesReached()),
         onGetMedicines: (token) => dispatch(getMedicines(token)),
         onDismissError: () => dispatch(medicinesDismissError()),
-        onEditMedicineFields: (medicineData) => dispatch(editMedicineFeilds(medicineData))
+        onEditMedicineFields: (medicineData) => dispatch(editMedicineFeilds(medicineData)),
+        onDeleteMedicine: (medicineId, token)  => dispatch(deleteMedicine(medicineId, token))
     }
 }
 
