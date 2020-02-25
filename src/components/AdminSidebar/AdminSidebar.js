@@ -8,6 +8,22 @@ class AdminSidebar extends Component{
         return this.props.location.pathname === path ? 'active' : '';
       }
     render(){
+        let addMedicine = null;
+        let orderMedicines = (
+            <li className={"nav-item " + this.getNavLinkClass("/orders/medicines")}>
+                <Link className="nav-link" to="/orders/medicines">
+                <span>Order Medicines</span></Link>
+            </li>
+        );
+        if(this.props.companyType === 'supplier'){
+            addMedicine = (   
+        <li className={"nav-item " + this.getNavLinkClass("/medicines/create")}>
+            <Link className="nav-link" to="/medicines/create">
+            <span>Add Medicine</span></Link>
+        </li>
+        );
+        orderMedicines = null;
+        }
         return(
             <ul className="navbar-nav primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -34,15 +50,11 @@ class AdminSidebar extends Component{
 
             <li className={"nav-item " + this.getNavLinkClass("/medicines")}>
                 <Link className="nav-link" to="/medicines">
-                <span>All Medicines</span></Link>
+                <span>{this.props.companyType === 'supplier' ? 'All' : 'My'} Medicines</span></Link>
             </li>
 
-            <li className={"nav-item " + this.getNavLinkClass("/add/medicine")}>
-                <Link className="nav-link" to="/medicines/create">
-                <span>Add Medicine</span></Link>
-            </li>
+            {addMedicine}
 
-            <hr className="sidebar-divider" />
             <hr className="sidebar-divider" />
 
             <div className="sidebar-heading">
@@ -54,6 +66,7 @@ class AdminSidebar extends Component{
                 <span>All Orders</span></Link>
             </li>
 
+            {orderMedicines}
             <hr className="sidebar-divider" />
 
     

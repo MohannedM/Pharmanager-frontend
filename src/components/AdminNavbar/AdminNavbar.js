@@ -1,11 +1,21 @@
 import React, {Component} from 'react';
 import { Navbar, Nav} from 'react-bootstrap';
 import {Link} from 'react-router-dom'
-import { faSearch} from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faShoppingCart} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class AdminNavbar extends Component{
     render(){
+        let shoppingCart = null;
+        if(this.props.isPharmacy){
+            shoppingCart = (
+                <li className="nav-item">
+                    <Link to="/" className="nav-link">
+                        <FontAwesomeIcon icon={faShoppingCart} />
+                    </Link>
+                </li>
+            );
+        }
         return(
             <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -21,9 +31,10 @@ class AdminNavbar extends Component{
                 </div>
                 </form>
                 <Nav className="mr-left">
+                {shoppingCart}
                 <div className="topbar-divider d-none d-lg-block"></div>
                 <li className="nav-item">
-                    <Link className="nav-link" to="/">Mohanned Farahat</Link>
+                <Link className="nav-link" to="/">{this.props.username}</Link>
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link" to="/logout">Logout</Link>

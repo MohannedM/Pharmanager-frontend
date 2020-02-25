@@ -34,6 +34,7 @@ class Medicines extends Component{
             return(
                 <Col  key={medicine._id} className="m-3" xs={12} lg={3}>
                     <MedicineCard 
+                    companyType={this.props.companyType}
                     medicine={medicine} 
                     editMedicineClicked={()=>this.editMedicineHandler(medicine)}
                     deleteMedicineClicked={()=>this.deleteMedicineHandler(medicine._id)} 
@@ -62,6 +63,7 @@ const mapStateToProps = state => {
         isFirstLoad: state.medicines.isFirstLoad,
         isLoading: state.medicines.loading,
         isError: state.medicines.error,
+        companyType: state.auth.companyType,
         token: state.auth.token
     }
 }
