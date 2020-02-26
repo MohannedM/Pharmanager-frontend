@@ -22,6 +22,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 medicines: state.medicines.concat(action.medicines),
                 totalMedicinesCount: action.totalMedicinesCount,
+                page: action.page,
                 loading: false
             }
         case actionTypes.GET_MEDICINES_MARKET_FAIL:
@@ -33,6 +34,15 @@ const reducer = (state = initialState, action) => {
         case actionTypes.MARKET_MEDICINES_DISMISS_ERROR:
             return{
                 ...state,
+                error: null
+            }
+        case actionTypes.AUTH_CLEAR:
+            return{
+                medicines: [],
+                cart: [],
+                loading: false,
+                page: 1,
+                totalMedicinesCount: null,
                 error: null
             }
         default: return state;

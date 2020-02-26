@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import MedicineCard from '../../../components/MedicineCard/MedicineCard';
 import { Row, Col } from 'react-bootstrap';
-import { getMedicinesMarket, marketMedicinesDismissError } from '../../../store/actions';
+import { getMedicinesMarket, marketMedicinesDismissError, marketPageChanged } from '../../../store/actions';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 import CustomModal from '../../../components/CustomModal/CustomModal';
+import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
+import Pagination from '../../../components/Pagination/Pagination';
 
 class OrderMedicine extends Component{
 
@@ -14,6 +16,11 @@ class OrderMedicine extends Component{
     handleModalClose = () => {
         this.props.onDismissError();
     }
+
+    onPageChange = toPage => {
+        this.props.onPageChanged(this.props.token, toPage)
+    }
+
     render(){
         const marketMedicines = this.props.marketMedicines.map(medicine=>{
             return(
@@ -33,11 +40,22 @@ class OrderMedicine extends Component{
             spinner = null;
         }
         return(
-            <Row>
-                <CustomModal show={this.props.reqError ? true : false} handleClose={this.handleModalClose} modalBody={this.props.reqError} />
-                {marketMedicines}
-                {spinner}
-            </Row>
+            <Auxiliary>
+                <Row>
+                    <CustomModal show={this.props.reqError ? true : false} handleClose={this.handleModalClose} modalBody={this.props.reqError} />
+                    {marketMedicines}
+                    {spinner}
+                </Row>
+                <Row>
+                    <Col className="align-self-center">
+                        <nav aria-label="...">
+                            <ul className="pagination pagination-sm">
+                                <Pagination totalMedicinesCount={this.props.totalMedicinesCount} page={this.props.page} pageChanged={this.onPageChange} />
+                            </ul>
+                        </nav>
+                    </Col>
+                </Row>
+            </Auxiliary>
         );
     }
 }
@@ -48,6 +66,7 @@ const mapStateToProps = state => {
         page: state.orders.page,
         token: state.auth.token,
         companyType: state.auth.companyType,
+        totalMedicinesCount: state.orders.totalMedicinesCount,
         reqError: state.orders.error
     }
 }
@@ -55,7 +74,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return{
         onGetMedicines: (token, page) => dispatch(getMedicinesMarket(token, page)),
-        onDismissError: () => dispatch(marketMedicinesDismissError())
+        onDismissError: () => dispatch(marketMedicinesDismissError()),
+        onPageChanged: (token, page) => dispatch(marketPageChanged(token, page))
     }
 }
 

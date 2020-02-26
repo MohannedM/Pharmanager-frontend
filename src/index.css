@@ -23,6 +23,9 @@
 .primary, .bg-primary{
   background-color: #4c3f9b;
 }
+.active{
+  background-color: #4c3f9b !important;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

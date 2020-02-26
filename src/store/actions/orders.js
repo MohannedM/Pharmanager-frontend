@@ -14,11 +14,12 @@ export const getMedicinesMarketStart = () => {
     }
 }
 
-export const getMedicinesMarketSuccess = (medicines, totalMedicinesCount) => {
+export const getMedicinesMarketSuccess = (medicines, totalMedicinesCount, page) => {
     return{
         type: actionTypes.GET_MEDICINES_MARKET_SUCCESS,
         medicines,
-        totalMedicinesCount
+        totalMedicinesCount,
+        page
     }
 }
 
@@ -32,5 +33,13 @@ export const getMedicinesMarketFail = error => {
 export const marketMedicinesDismissError = () => {
     return{
         type: actionTypes.MARKET_MEDICINES_DISMISS_ERROR
+    }
+}
+
+export const marketPageChanged = (token, page) =>{
+    return{
+        type: actionTypes.MARKET_PAGE_CHANGED,
+        token,
+        page
     }
 }

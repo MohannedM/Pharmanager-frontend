@@ -2,7 +2,7 @@ import { takeEvery } from "redux-saga/effects";
 import * as actionTypes from '../actions/actionTypes';
 import { authSaga, logoutSaga, authInitSaga, authTimeoutSaga } from "./auth";
 import {createMedicineSaga, getMedicinesSaga, editMedicineSaga, deleteMedicineSaga} from './medicines';
-import { getMedicinesMarketSaga } from "./orders";
+import { getMedicinesMarketSaga, marketPageChangedSaga } from "./orders";
  
 
 export function* rootAuthSaga(){
@@ -21,5 +21,6 @@ export function* rootMedicineSaga(){
 }
 
 export function* rootOrdersSaga(){
-    yield takeEvery(actionTypes.GET_MEDICINES_MARKET, getMedicinesMarketSaga)
+    yield takeEvery(actionTypes.GET_MEDICINES_MARKET, getMedicinesMarketSaga);
+    yield takeEvery(actionTypes.MARKET_PAGE_CHANGED, marketPageChangedSaga);
 }

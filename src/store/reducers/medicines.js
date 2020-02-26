@@ -85,6 +85,16 @@ const reducer = (state = initalState, action)=>{
                 loading: false,
                 error: action.error
             }
+        case actionTypes.AUTH_CLEAR:
+            return{
+                medicines: [],
+                loading: false,
+                error: null,
+                redirect: false,
+                isEditing: false,
+                medicineData: null,
+                isFirstLoad: true
+            }
         default: return state;
     }
 }

@@ -1,5 +1,5 @@
 import { put } from 'redux-saga/effects';
-import { getMedicinesMarketStart, getMedicinesMarketSuccess, getMedicinesMarketFail } from '../actions';
+import { getMedicinesMarketStart, getMedicinesMarketSuccess, getMedicinesMarketFail, getMedicinesMarket } from '../actions';
 import axios from 'axios';
 
 export function* getMedicinesMarketSaga(action){
@@ -11,9 +11,11 @@ export function* getMedicinesMarketSaga(action){
                 Authorization: "Bearer " + action.token 
             }
         });
-        yield put(getMedicinesMarketSuccess(response.data.medicines, response.data.totalMedicinesCount));
+        yield put(getMedicinesMarketSuccess(response.data.medicines, response.data.totalMedicinesCount, action.page));
     }catch(error){
         yield put(getMedicinesMarketFail(error.response.data.message));
     }
-    
+}
+export function* marketPageChangedSaga(action){
+    yield put(getMedicinesMarket(action.token, action.page));
 }

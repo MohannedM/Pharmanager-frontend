@@ -108,18 +108,18 @@ class Signup extends Component{
 
     
     setCompanyName = (event) =>{
-        if(event.target.value.length <= 25 && event.target.value.length >= 6){
+        if(event.target.value.length <= 25 && event.target.value.length >= 4){
             this.setState({companyName: event.target.value, errors: {...this.state.errors, companyName: {error: false, touched: true, message: ''}}});
         }else{
-            this.setState({companyName: event.target.value, errors: {...this.state.errors, companyName: {error: true, touched: true, message: 'Please enter your company name that consists of 6 to 25 charcters'}}});
+            this.setState({companyName: event.target.value, errors: {...this.state.errors, companyName: {error: true, touched: true, message: 'Please enter your company name that consists of 4 to 25 charcters'}}});
         }
     }
     
     setCompanyAddress = (event) =>{
-        if(event.target.value.length <= 25 && event.target.value.length >= 6){
+        if(event.target.value.length <= 50 && event.target.value.length >= 6){
             this.setState({companyAddress: event.target.value, errors: {...this.state.errors, companyAddress: {error: false, touched: true, message: ''}}});
         }else{
-            this.setState({companyAddress: event.target.value, errors: {...this.state.errors, companyAddress: {error: true, touched: true, message: 'Please enter your company address that consists of 6 to 25 charcters'}}});
+            this.setState({companyAddress: event.target.value, errors: {...this.state.errors, companyAddress: {error: true, touched: true, message: 'Please enter your company address that consists of 6 to 50 charcters'}}});
         }
     }
     

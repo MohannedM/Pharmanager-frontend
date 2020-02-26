@@ -22,7 +22,7 @@ class MedicineCard extends Component{
                     <Card.Subtitle className="mb-2 text-muted">Expiration Date: {medDate.getDate()+'/'+(medDate.getMonth()+1)+'/'+medDate.getFullYear()}</Card.Subtitle>
                     <Card.Subtitle className="mb-2 text-muted">Price: $ {this.props.medicine.price.toFixed(2)}</Card.Subtitle>
                     <Card.Subtitle className="mb-2 text-muted">Quantity: {this.props.medicine.quantity} unit</Card.Subtitle>
-                    { this.props.user ?  <Card.Subtitle className="mb-2 text-muted">Company: {this.props.medicine.user.name}</Card.Subtitle> : null} 
+                    { this.props.user ?  <Card.Subtitle className="mb-2 text-muted">Company: {this.props.medicine.user.companyName}</Card.Subtitle> : null} 
                     <Card.Text>
                     {this.props.medicine.description}
                     </Card.Text>

@@ -24,5 +24,6 @@ export {
     getMedicinesMarketStart,
     getMedicinesMarketSuccess,
     getMedicinesMarketFail,
-    marketMedicinesDismissError
+    marketMedicinesDismissError,
+    marketPageChanged
 } from './orders';
