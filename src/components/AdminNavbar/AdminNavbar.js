@@ -10,8 +10,9 @@ class AdminNavbar extends Component{
         if(this.props.isPharmacy){
             shoppingCart = (
                 <li className="nav-item">
-                    <Link to="/" className="nav-link">
+                    <Link to="/cart" className="nav-link">
                         <FontAwesomeIcon icon={faShoppingCart} />
+                        <span className="badge badge-danger badge-counter">{this.props.cartCount}</span>
                     </Link>
                 </li>
             );

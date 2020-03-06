@@ -2,7 +2,6 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     medicines: [],
-    cart: [],
     loading: false,
     page: 1,
     totalMedicinesCount: null,
@@ -39,7 +38,6 @@ const reducer = (state = initialState, action) => {
         case actionTypes.AUTH_CLEAR:
             return{
                 medicines: [],
-                cart: [],
                 loading: false,
                 page: 1,
                 totalMedicinesCount: null,

@@ -19,8 +19,8 @@ class AdminLayout extends Component{
 
             <div id="content">
     
-            <AdminNavbar  username={this.props.username} isPharmacy={this.props.companyType === "pharmacy" } />
-    
+            <AdminNavbar  username={this.props.username} isPharmacy={this.props.companyType === "pharmacy" } cartCount={this.props.cart.length} />
+
             <div className="container-fluid">
                     {this.props.children}      
             </div>
@@ -34,7 +34,8 @@ class AdminLayout extends Component{
 const mapStateToProps = state => {
   return{
     username: state.auth.name,
-    companyType: state.auth.companyType
+    companyType: state.auth.companyType,
+    cart: state.cart.cart
   }
 }
 

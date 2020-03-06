@@ -9,25 +9,19 @@ import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import Pagination from '../../../components/Pagination/Pagination';
 import OrderModal from '../../../components/OrderModal/OrderModal';
 
-class OrderMedicine extends Component{
+class Cart extends Component{
 
     state = {
         showMedicineModal: false,
         currentMedicine: null
     }
 
-    componentDidMount(){
-        this.props.onGetMedicines(this.props.token, 1);
-    }
     handleModalClose = () => {
         this.props.onDismissError();
     }
 
-    onPageChange = toPage => {
-        this.props.onPageChanged(this.props.token, toPage)
-    }
 
-    addMedicineHandler = (medicine) =>{
+    deleteMedicineHandler = (medicine) =>{
         this.setState({showMedicineModal: true});
         this.setState({currentMedicine: medicine});
     }
@@ -38,14 +32,15 @@ class OrderMedicine extends Component{
     }
 
     render(){
-        const marketMedicines = this.props.marketMedicines.map(medicine=>{
+        const cartMedicines = this.props.cartMedicines.map(medicine=>{
             return(
                 <Col  key={medicine._id} className="m-3" xs={12} lg={3}>
                     <MedicineCard 
                     companyType={this.props.companyType}
+                    cart
                     user={medicine.user}
-                    medicine={medicine} 
-                    addMedicineClicked={()=>this.addMedicineHandler(medicine)}
+                    medicine={medicine.medicine} 
+                    deleteMedicineClicked={()=>this.deleteMedicineHandler(medicine)}
                     show={this.state.showMedicineModal}
                     ></MedicineCard>
                 </Col>
@@ -59,18 +54,9 @@ class OrderMedicine extends Component{
             <Auxiliary>
                 <Row>
                     <CustomModal show={this.props.reqError ? true : false} handleClose={this.handleModalClose} modalBody={this.props.reqError} />
-                    {marketMedicines}
+                    {cartMedicines}
                     {spinner}
-                    <OrderModal medicine={this.state.currentMedicine} show={this.state.showMedicineModal} handleClose={this.handleModalClose}  />
-                </Row>
-                <Row>
-                    <Col className="align-self-center">
-                        <nav aria-label="...">
-                            <ul className="pagination pagination-sm">
-                                <Pagination totalMedicinesCount={this.props.totalMedicinesCount} page={this.props.page} pageChanged={this.onPageChange} />
-                            </ul>
-                        </nav>
-                    </Col>
+                    <OrderModal medicine={this.state.currentMedicine} show={this.state.showMedicineModal} cart handleClose={this.handleModalClose} cartItem={this.state.currentMedicine}  />
                 </Row>
             </Auxiliary>
         );
@@ -78,22 +64,18 @@ class OrderMedicine extends Component{
 }
 const mapStateToProps = state => {
     return {
-        marketMedicines: state.orders.medicines,
-        isLoading: state.orders.loading,
-        page: state.orders.page,
+        cartMedicines: state.cart.cart,
+        isLoading: state.cart.loading,
         token: state.auth.token,
         companyType: state.auth.companyType,
-        totalMedicinesCount: state.orders.totalMedicinesCount,
-        reqError: state.orders.error
+        reqError: state.cart.error
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return{
-        onGetMedicines: (token, page) => dispatch(getMedicinesMarket(token, page)),
-        onDismissError: () => dispatch(marketMedicinesDismissError()),
-        onPageChanged: (token, page) => dispatch(marketPageChanged(token, page))
+
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderMedicine);
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

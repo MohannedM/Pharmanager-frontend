@@ -12,7 +12,10 @@ class MedicineCard extends Component{
             </Auxiliary>
         );
         if(this.props.companyType === 'pharmacy'){
-            buttons = <Button block variant="primary"  onClick={this.props.deleteMedicineClicked}>Add To Cart</Button>
+            buttons = <Button block variant="primary"  onClick={this.props.addMedicineClicked}>Add To Cart</Button>
+        }
+        if(this.props.companyType === 'pharmacy' && this.props.cart){
+            buttons = <Button block variant="danger"  onClick={this.props.deleteMedicineClicked}>Delete Medicine(s)</Button>
         }
         const medDate = new Date(this.props.medicine.expirationDate);
         return(

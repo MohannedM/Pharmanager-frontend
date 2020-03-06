@@ -6,8 +6,15 @@ import Medicines from './Medicines/Medicines';
 import AdminLayout from '../../hoc/Layouts/AdminLayout/AdminLayout';
 import { connect } from 'react-redux';
 import OrderMedicines from './OrderMedicines/OrderMedicines';
+import { getCart } from '../../store/actions';
+import Cart from './Cart/Cart';
 
 class Dashboard extends Component{
+  componentDidMount(){
+    if(this.props.companyType === 'pharmacy'){
+      this.props.onGetCart(this.props.token);
+    }
+  }
     getNavLinkClass = (path) => {
       return this.props.location.pathname === path ? 'active' : '';
     }
@@ -16,6 +23,7 @@ class Dashboard extends Component{
         <Switch>
           <Route path="/medicines" component={Medicines} />
           <Route path="/orders/medicines" component={OrderMedicines} />
+          <Route path="/cart" component={Cart} />
           <Route path="/" component={Reports} />
         </Switch>
       );
@@ -39,8 +47,15 @@ class Dashboard extends Component{
 
 const mapStateToProps = state => {
   return{
-    companyType: state.auth.companyType
+    companyType: state.auth.companyType,
+    token: state.auth.token
   }
 }
 
-export default connect(mapStateToProps)(Dashboard);
+const mapDispatchToProps = dispatch => {
+  return{
+    onGetCart: (token) => dispatch(getCart(token))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
