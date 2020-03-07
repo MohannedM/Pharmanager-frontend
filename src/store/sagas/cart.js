@@ -42,7 +42,6 @@ export function* deleteCartItemSaga(action){
             }
         });
         yield put(deleteCartItemSuccess(response.data.message, action.cartItemId)); 
-        yield put(clearModalData());
     }catch(error){
         yield put(deleteCartItemFail(error.response.data.message));
         yield put(clearModalData());

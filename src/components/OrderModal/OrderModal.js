@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import { Modal, Button, Form } from "react-bootstrap";
 import { connect } from 'react-redux';
-import { addToCart, clearModalData, deleteCartItem } from '../../store/actions';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import { addToCart, clearModalData } from '../../store/actions';
+
 
 class AddModal extends Component{
     state = {
@@ -25,14 +26,6 @@ class AddModal extends Component{
         this.props.onAddMedicine(this.props.token, this.props.medicine._id, this.state.quantity.value);
     }
 
-    handleDeleteMedicine = () => {
-        this.props.onDeleteMedicine(this.props.token, this.props.cartItem._id);
-        if(!this.props.loading){
-            this.props.handleClose();
-            this.props.onClearModalData();
-        }
-    }
-
     quantityChangeHandler = event => {
         if(+event.target.value <= +this.props.medicine.quantity && +event.target.value >= 1){
             this.setState({quantity: {...this.state.quantity, value: event.target.value, touched: true, error: false, message: ''}});
@@ -41,79 +34,43 @@ class AddModal extends Component{
         }
     }
     render(){
-        let buttons = (
-            <Auxiliary>
-                    <Button variant="primary" onClick={this.handleAddMedicine}>
-                        Add Medicine(s)
-                    </Button>
-                    <Button variant="secondary" onClick={this.handlModalHide}>
-                        Close
-                    </Button>
-            </Auxiliary>
-        );
-        if(this.props.cart){
-            buttons = (
-                <Auxiliary>
-                        <Button variant="danger" onClick={this.handleDeleteMedicine}>
-                            Delete Medicine(s)
-                        </Button>
-                        <Button variant="secondary" onClick={this.handlModalHide}>
-                            Close
-                        </Button>
-                </Auxiliary>
-            );
-        }
+
         let body = (
             <Auxiliary>
-                <Modal.Body>
-                        {this.props.cart ? <h6 className="text-warning">Are you sure youe want to delete this medicine?</h6> : ( <Form.Group>
+                    <Form.Group>
                         <Form.Label>Quantity:</Form.Label>
                         <Form.Control type="number" className={this.state.quantity.error && this.state.quantity.touched ? 'is-invalid' : ''} value={this.state.quantity.value} onChange={this.quantityChangeHandler} placeholder="Quantity" />
                         {this.state.quantity.error && this.state.quantity.touched ? <p className="invalid-feedback">{this.state.quantity.message}</p> : null}
-                    </Form.Group> )}
-                    </Modal.Body>
-                    <Modal.Footer>
-                    {buttons}
-                </Modal.Footer>
+                    </Form.Group>
             </Auxiliary>
         );
         if(this.props.loading){
             body = (
                 <Auxiliary>
-                    <Modal.Body>
-                        <LoadingSpinner />
-                        </Modal.Body>
-                        <Modal.Footer>
-                        <Button variant="primary" onClick={this.handleAddMedicine} disabled>
-                            Add Medicine(s)
-                        </Button>
-                        <Button variant="secondary" onClick={this.handlModalHide}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
+                    <LoadingSpinner />
                 </Auxiliary>
             );
         }
         if(this.props.error || this.props.successMessage){
             body = (
                 <Auxiliary>
-                    <Modal.Body>
                         {this.props.error ? <p className="text-danger">{this.props.error}</p> : <p className="text-primary">{this.props.successMessage}</p>}
-                        </Modal.Body>
-                        <Modal.Footer>
-                        <Button variant="primary" onClick={this.handleAddMedicine} disabled>
-                            Add Medicine(s)
-                        </Button>
-                        <Button variant="secondary" onClick={this.handlModalHide}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
                 </Auxiliary>
             );
         }
         return(
             <Modal show={this.props.show} onHide={this.handlModalHide}>
-                {body}
+                    <Modal.Body>
+                        {body}
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="primary" onClick={this.handleAddMedicine} disabled={this.props.error || this.props.loading || this.props.successMessage ? true : false}>
+                        Add Medicine(s)
+                    </Button>
+                    <Button variant="secondary" onClick={this.handlModalHide}>
+                        Close
+                    </Button>
+                </Modal.Footer>
             </Modal>
         );
     }
@@ -131,9 +88,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return{
         onAddMedicine: (token, medicineId, quantity) => dispatch(addToCart(token, medicineId, quantity)),
-        onClearModalData: () => dispatch(clearModalData()),
-        onDeleteMedicine: (token, cartItemId) => dispatch(deleteCartItem(token, cartItemId)) 
+        onClearModalData: () => dispatch(clearModalData())
     }
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddModal);

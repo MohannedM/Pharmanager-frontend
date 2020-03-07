@@ -78,7 +78,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loadingItem: false,
                 cart: cartItems,
-                message: action.message
+                successMessage: action.message
             }
         case actionTypes.DELETE_CART_ITEM_FAIL:
             return{

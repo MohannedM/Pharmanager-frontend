@@ -7,7 +7,8 @@ import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 import CustomModal from '../../../components/CustomModal/CustomModal';
 import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import Pagination from '../../../components/Pagination/Pagination';
-import OrderModal from '../../../components/OrderModal/OrderModal';
+import DeleteModal from '../../../components/DeleteModal/DeleteModal';
+import { addToCart, clearModalData, deleteCartItem } from '../../../store/actions';
 
 class Cart extends Component{
 
@@ -25,10 +26,15 @@ class Cart extends Component{
         this.setState({showMedicineModal: true});
         this.setState({currentMedicine: medicine});
     }
-
+    
     handleModalClose = () => {
         this.setState({showMedicineModal: false});
         this.setState({currentMedicine: null});
+        this.props.onClearModalData();
+    }
+
+    deleteMedicine = () => {
+        this.props.onDeleteMedicine(this.props.token, this.state.currentMedicine._id);
     }
 
     render(){
@@ -56,7 +62,7 @@ class Cart extends Component{
                     <CustomModal show={this.props.reqError ? true : false} handleClose={this.handleModalClose} modalBody={this.props.reqError} />
                     {cartMedicines}
                     {spinner}
-                    <OrderModal medicine={this.state.currentMedicine} show={this.state.showMedicineModal} cart handleClose={this.handleModalClose} cartItem={this.state.currentMedicine}  />
+                    <DeleteModal medicine={this.state.currentMedicine} show={this.state.showMedicineModal}  handleClose={this.handleModalClose} deleteCartItem={this.deleteMedicine}  />
                 </Row>
             </Auxiliary>
         );
@@ -68,13 +74,14 @@ const mapStateToProps = state => {
         isLoading: state.cart.loading,
         token: state.auth.token,
         companyType: state.auth.companyType,
-        reqError: state.cart.error
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return{
-
+        onAddMedicine: (token, medicineId, quantity) => dispatch(addToCart(token, medicineId, quantity)),
+        onClearModalData: () => dispatch(clearModalData()),
+        onDeleteMedicine: (token, cartItemId) => dispatch(deleteCartItem(token, cartItemId)) 
     }
 }
 
