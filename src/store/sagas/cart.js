@@ -11,7 +11,7 @@ export function* addToCartSaga(action){
                 Authorization: "Bearer " + action.token
             }
         });
-        yield put(addToCartSuccess(response.data.medicine, response.data._id, response.data.message));
+        yield put(addToCartSuccess(response.data.medicine, response.data._id, response.data.quantity, response.data.message));
     }catch(error){
         yield put(addToCartFail(error.response.data.message));
     }
@@ -26,8 +26,7 @@ export function* getCartSaga(action){
                 Authorization: "Bearer " + action.token
             }
         });
-
-        yield put(getCartSuccess(response.data.cart.medicines));
+        yield put(getCartSuccess(response.data.cart));
     }catch(error){
         yield put(getCartFail(error.response.data.message));
     }
@@ -45,5 +44,19 @@ export function* deleteCartItemSaga(action){
     }catch(error){
         yield put(deleteCartItemFail(error.response.data.message));
         yield put(clearModalData());
+    }
+}
+
+export function* deleteCartSaga(action){
+    try{
+        console.log(action.token)
+        yield axios.delete("http://localhost:8080/cart",{
+            headers:{
+                Authorization: 'Bearer ' + action.token
+            }
+        });
+
+    }catch(error){
+        console.log(error);
     }
 }

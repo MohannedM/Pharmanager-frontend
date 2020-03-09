@@ -19,7 +19,7 @@ class AdminLayout extends Component{
 
             <div id="content">
     
-            <AdminNavbar  username={this.props.username} isPharmacy={this.props.companyType === "pharmacy" } cartCount={this.props.cart.length} />
+            <AdminNavbar  username={this.props.username} isPharmacy={this.props.companyType === "pharmacy" } cartCount={this.props.cart ? this.props.cart.medicines.length : 0} />
 
             <div className="container-fluid">
                     {this.props.children}      

@@ -33,9 +33,10 @@ export const authDismissError = () => {
     }
 }
 
-export const authLogout = () => {
+export const authLogout = token => {
     return{
-        type: actionTypes.AUTH_LOGOUT
+        type: actionTypes.AUTH_LOGOUT,
+        token
     }
 }
 
@@ -45,15 +46,17 @@ export const authClear = () => {
     }
 }
 
-export const authInit = () => {
+export const authInit = token => {
     return{
-        type: actionTypes.AUTH_INIT
+        type: actionTypes.AUTH_INIT,
+        token
     }
 }
 
-export const authTimeout = (expirationTime) => {
+export const authTimeout = (expirationTime, token) => {
     return{
         type: actionTypes.AUTH_TIMEOUT,
-        expirationTime
+        expirationTime,
+        token
     }
 }

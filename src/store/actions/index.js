@@ -41,5 +41,6 @@ export {
     deleteCartItem,
     deleteCartItemFail,
     deleteCartItemStart,
-    deleteCartItemSuccess
+    deleteCartItemSuccess,
+    deleteCart
 } from './cart';

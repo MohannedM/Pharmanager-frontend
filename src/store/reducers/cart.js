@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    cart: [],
+    cart: null,
     loading: false,
     loadingItem: false,
     error: null,
@@ -13,7 +13,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.AUTH_CLEAR:
             return{
                 ...state,
-                cart: [],
+                cart: null,
                 loading: false,
                 loadingItem: false,
                 error: null,
@@ -28,7 +28,7 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 loading: false,
-                cart: state.cart.concat({medicine: {...action.medicineData}, _id: action.cartId}),
+                cart: state.cart ? { ...state.cart, medicines: [...state.cart.medicines, {medicine: {...action.medicineData}, _id: action.cartId, quantity: action.quantity}]} : {medicines: [{medicine: {...action.medicineData}, _id: action.cartId, quantity: action.quantity}]},
                 successMessage: action.message
             }
         case actionTypes.ADD_TO_CART_FAIL:

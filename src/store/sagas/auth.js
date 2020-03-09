@@ -1,7 +1,7 @@
 import {put, delay} from 'redux-saga/effects';
-import {authStart, authFail, authSuccess, authClear, authLogout, authTimeout} from '../actions';
+import {authStart, authFail, authSuccess, authClear, authLogout, authTimeout, deleteCart} from '../actions';
 import axios from 'axios';
-
+///delete cart not init when timeout
 export function* authSaga(action){
     yield put(authStart());
     const authData = {...action.authData, errors: null}
@@ -17,7 +17,7 @@ export function* authSaga(action){
         yield localStorage.setItem("companyNumber", response.data.userData.companyNumber);
         const expirationTime = yield new Date().getTime() + (3600 * 1000);
         yield localStorage.setItem("expirationTime", expirationTime);
-        yield put(authTimeout(expirationTime));
+        yield put(authTimeout(expirationTime, response.data.userData.token));
 
     }catch(error){
         yield put(authFail(error.response.data.message));
@@ -33,6 +33,7 @@ export function* logoutSaga(action){
     yield localStorage.removeItem("companyAddress");
     yield localStorage.removeItem("companyNumber");
     yield localStorage.removeItem("expirationTime");
+    yield put(deleteCart(action.token));
     yield put(authClear());
 }
 
@@ -56,14 +57,14 @@ export function* authInitSaga(action){
             companyAddress,
             companyNumber
         }));
-        yield put(authTimeout(+expirationTime));
+        yield put(authTimeout(+expirationTime, action.token));
     }else{
-        yield put(authLogout());
+        yield put(authLogout(action.token));
     }
 }
 
 export function* authTimeoutSaga(action){
     const currentTime = yield new Date().getTime();
     yield delay(action.expirationTime - currentTime);
-    yield put(authLogout());
+    yield put(authLogout(action.token));
 }

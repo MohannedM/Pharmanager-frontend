@@ -3,7 +3,7 @@ import * as actionTypes from '../actions/actionTypes';
 import { authSaga, logoutSaga, authInitSaga, authTimeoutSaga } from "./auth";
 import {createMedicineSaga, getMedicinesSaga, editMedicineSaga, deleteMedicineSaga} from './medicines';
 import { getMedicinesMarketSaga, marketPageChangedSaga } from "./orders";
-import { addToCartSaga, getCartSaga, deleteCartItemSaga } from "./cart";
+import { addToCartSaga, getCartSaga, deleteCartItemSaga, deleteCartSaga } from "./cart";
  
 
 export function* rootAuthSaga(){
@@ -30,4 +30,5 @@ export function* rootCartSaga(){
     yield takeEvery(actionTypes.ADD_TO_CART, addToCartSaga);
     yield takeEvery(actionTypes.GET_CART, getCartSaga);
     yield takeEvery(actionTypes.DELETE_CART_ITEM, deleteCartItemSaga);
+    yield takeEvery(actionTypes.DELETE_CART, deleteCartSaga);
 }

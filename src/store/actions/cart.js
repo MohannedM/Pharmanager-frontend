@@ -17,10 +17,11 @@ export const addToCartStart = () => {
     }
 }
 
-export const addToCartSuccess = (medicineData, cartId, message) => {
+export const addToCartSuccess = (medicineData, cartId, quantity, message) => {
     return{
         type: actionTypes.ADD_TO_CART_SUCCESS,
         medicineData,
+        quantity,
         cartId,
         message
     }
@@ -94,4 +95,11 @@ export const deleteCartItemFail = error => {
         type: actionTypes.DELETE_CART_ITEM_FAIL,
         error
     }
+}
+
+export const deleteCart = token => {
+    return{
+        type: actionTypes.DELETE_CART,
+        token
+    }    
 }

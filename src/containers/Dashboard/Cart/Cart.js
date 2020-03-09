@@ -38,7 +38,7 @@ class Cart extends Component{
     }
 
     render(){
-        const cartMedicines = this.props.cartMedicines.map(medicine=>{
+        const cartMedicines = this.props.cartMedicines.medicines.map(medicine=>{
             return(
                 <Col  key={medicine._id} className="m-3" xs={12} lg={3}>
                     <MedicineCard 
@@ -46,6 +46,7 @@ class Cart extends Component{
                     cart
                     user={medicine.user}
                     medicine={medicine.medicine} 
+                    quantity={medicine.quantity}
                     deleteMedicineClicked={()=>this.deleteMedicineHandler(medicine)}
                     show={this.state.showMedicineModal}
                     ></MedicineCard>

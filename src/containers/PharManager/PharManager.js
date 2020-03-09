@@ -17,7 +17,7 @@ const Dashboard = asyncComponent(()=>{
 
 class PharManager extends Component{
   componentDidMount(){
-    this.props.onInitAuth();
+    this.props.onInitAuth(this.props.token);
   }
   render(){
     let routes = (
@@ -63,12 +63,13 @@ class PharManager extends Component{
 const mapStateToProps = state => {
   return{
     isAuth: state.auth.token !== null,
-    isSupplier: state.auth.companyType === 'supplier'
+    isSupplier: state.auth.companyType === 'supplier',
+    token: state.auth.token
   }
 }
 const mapDispatchToProps = dispatch => {
   return{
-    onInitAuth: () => dispatch(authInit())
+    onInitAuth: (token) => dispatch(authInit(token))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(PharManager);
