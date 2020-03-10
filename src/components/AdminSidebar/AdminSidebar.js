@@ -62,7 +62,7 @@ class AdminSidebar extends Component{
             </div>
 
             <li className={"nav-item " + this.getNavLinkClass("/orders")}>
-                <Link className="nav-link" to="/medicines">
+                <Link className="nav-link" to="/orders">
                 <span>All Orders</span></Link>
             </li>
 

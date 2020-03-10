@@ -9,6 +9,8 @@ import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import Pagination from '../../../components/Pagination/Pagination';
 import DeleteModal from '../../../components/DeleteModal/DeleteModal';
 import { addToCart, clearModalData, deleteCartItem } from '../../../store/actions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 class Cart extends Component{
 
@@ -60,6 +62,11 @@ class Cart extends Component{
         return(
             <Auxiliary>
                 <Row>
+                    <Col sm={12}>
+                        {this.props.cartMedicines.medicines.length > 0 ? <button className="d-sm-inline-block btn btn-sm btn-primary shadow-sm">Proceed to checkout <FontAwesomeIcon icon={faArrowRight} /></button> : <p className="display-4">No products in cart</p>}
+                    </Col>
+                </Row>
+                <Row>
                     <CustomModal show={this.props.reqError ? true : false} handleClose={this.handleModalClose} modalBody={this.props.reqError} />
                     {cartMedicines}
                     {spinner}
@@ -71,7 +78,7 @@ class Cart extends Component{
 }
 const mapStateToProps = state => {
     return {
-        cartMedicines: state.cart.cart,
+        cartMedicines: state.cart.cart ? state.cart.cart : {medicines:[]},
         isLoading: state.cart.loading,
         token: state.auth.token,
         companyType: state.auth.companyType,

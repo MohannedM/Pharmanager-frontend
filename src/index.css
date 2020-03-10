@@ -41,3 +41,15 @@ html, body{
 footer{
   color: #858796;
 }
+
+
+.bd-callout {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #eee;
+  border-left-width: .25rem;
+  border-radius: .25rem;
+}
+.bd-callout-primary{
+  border-left-color: #4c3f9b;
+}

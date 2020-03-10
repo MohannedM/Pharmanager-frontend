@@ -57,7 +57,7 @@ export function* authInitSaga(action){
             companyAddress,
             companyNumber
         }));
-        yield put(authTimeout(+expirationTime, action.token));
+        yield put(authTimeout(+expirationTime, token));
     }else{
         yield put(authLogout(action.token));
     }

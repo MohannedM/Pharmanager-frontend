@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import OrderMedicines from './OrderMedicines/OrderMedicines';
 import { getCart } from '../../store/actions';
 import Cart from './Cart/Cart';
+import Orders from './Orders/Orders';
 
 class Dashboard extends Component{
   componentDidMount(){
@@ -24,6 +25,7 @@ class Dashboard extends Component{
           <Route path="/medicines" component={Medicines} />
           <Route path="/orders/medicines" component={OrderMedicines} />
           <Route path="/cart" component={Cart} />
+          <Route path="/orders" component={Orders} />
           <Route path="/" component={Reports} />
         </Switch>
       );
