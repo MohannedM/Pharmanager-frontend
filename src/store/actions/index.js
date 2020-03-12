@@ -25,7 +25,11 @@ export {
     getMedicinesMarketSuccess,
     getMedicinesMarketFail,
     marketMedicinesDismissError,
-    marketPageChanged
+    marketPageChanged,
+    orderMedicines,
+    orderMedicinesStart,
+    orderMedicinesSucces,
+    orderMedicinesFail
 } from './orders';
 
 export {

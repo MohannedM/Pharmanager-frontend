@@ -9,6 +9,7 @@ import OrderMedicines from './OrderMedicines/OrderMedicines';
 import { getCart } from '../../store/actions';
 import Cart from './Cart/Cart';
 import Orders from './Orders/Orders';
+import Checkout from './Checkout/Checkout';
 
 class Dashboard extends Component{
   componentDidMount(){
@@ -26,6 +27,7 @@ class Dashboard extends Component{
           <Route path="/orders/medicines" component={OrderMedicines} />
           <Route path="/cart" component={Cart} />
           <Route path="/orders" component={Orders} />
+          <Route path="/checkout" component={Checkout} />
           <Route path="/" component={Reports} />
         </Switch>
       );
@@ -35,7 +37,7 @@ class Dashboard extends Component{
             <Route path="/medicines/create" component={MedicineForm} />
             <Route path="/medicines/edit" component={MedicineForm} />
             <Route path="/medicines" component={Medicines} />
-          <Route path="/orders" component={Orders} />
+            <Route path="/orders" component={Orders} />
             <Route path="/" component={Reports} />
           </Switch>
         );

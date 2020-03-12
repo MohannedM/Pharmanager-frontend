@@ -28,7 +28,7 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 loading: false,
-                cart: state.cart ? { ...state.cart, medicines: [...state.cart.medicines, {medicine: {...action.medicineData}, _id: action.cartId, quantity: action.quantity}]} : {medicines: [{medicine: {...action.medicineData}, _id: action.cartId, quantity: action.quantity}]},
+                cart: {...action.cart},
                 successMessage: action.message
             }
         case actionTypes.ADD_TO_CART_FAIL:
@@ -85,6 +85,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loadingItem: false,
                 error: action.error
+            }
+        case actionTypes.ORDER_MEDICINES_SUCCESS:
+            return{
+                ...state,
+                cart: null
             }
         default: return state;
     }

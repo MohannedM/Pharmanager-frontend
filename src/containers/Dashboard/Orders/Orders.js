@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Row, Col } from 'react-bootstrap';
+import ItemDetails from '../../../components/ItemDetails/ItemDetails';
 
 
 class Orders extends Component{
@@ -29,15 +30,10 @@ class Orders extends Component{
         ];
         const orders = purchases.map((purchase, index)=>{
             return(
-                <Col  key={index} sm={12}>
-                    <div className="bd-callout bd-callout-primary">
-                        {purchase.medicines.map((medicine, indexM)=><p key={indexM}>{medicine.name}  <span className="badge badge-primary badge-pill">$ {medicine.price.toFixed(2)}</span> * <span className="badge badge-primary badge-pill">{medicine.quantity} unit(s)</span></p>)}
-                        <p className="lead"><b>Purchase date: </b>{purchase.date}</p>
-                        <p className="lead"><b>Order total price: </b>$ {purchase.totalPrice.toFixed(2)}</p>
-                        <p className="lead"><b>Supplier: </b>{purchase.supplier}</p>
-                    </div>
+                <Col sm={12}>
+                    <ItemDetails item={purchase} date={purchase.date} totalPrice={purchase.totalPrice}  supplier={purchase.supplier} />
                 </Col>
-            )
+            );
         });
         return (
         <Row>

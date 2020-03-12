@@ -35,6 +35,22 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 error: null
             }
+        case actionTypes.ORDER_MEDICINES_START:
+            return{
+                ...state,
+                loading: true
+            }
+        case actionTypes.ORDER_MEDICINES_SUCCESS:
+            return{
+                ...state,
+                loading: false
+            }
+        case actionTypes.ORDER_MEDICINES_FAIL:
+            return{
+                ...state,
+                loading: false,
+                error: action.error
+            }
         case actionTypes.AUTH_CLEAR:
             return{
                 medicines: [],

@@ -11,6 +11,7 @@ import DeleteModal from '../../../components/DeleteModal/DeleteModal';
 import { addToCart, clearModalData, deleteCartItem } from '../../../store/actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 class Cart extends Component{
 
@@ -63,7 +64,7 @@ class Cart extends Component{
             <Auxiliary>
                 <Row>
                     <Col sm={12}>
-                        {this.props.cartMedicines.medicines.length > 0 ? <button className="d-sm-inline-block btn btn-sm btn-primary shadow-sm">Proceed to checkout <FontAwesomeIcon icon={faArrowRight} /></button> : <p className="display-4">No products in cart</p>}
+                        {this.props.cartMedicines.medicines.length > 0 ? <Link to="/checkout" className="d-sm-inline-block btn btn-sm btn-primary shadow-sm">Proceed to checkout <FontAwesomeIcon icon={faArrowRight} /></Link> : <p className="display-4">No products in cart</p>}
                     </Col>
                 </Row>
                 <Row>

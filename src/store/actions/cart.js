@@ -17,12 +17,10 @@ export const addToCartStart = () => {
     }
 }
 
-export const addToCartSuccess = (medicineData, cartId, quantity, message) => {
+export const addToCartSuccess = (cart, message) => {
     return{
         type: actionTypes.ADD_TO_CART_SUCCESS,
-        medicineData,
-        quantity,
-        cartId,
+        cart,
         message
     }
 }

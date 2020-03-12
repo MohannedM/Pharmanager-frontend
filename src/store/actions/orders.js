@@ -43,3 +43,30 @@ export const marketPageChanged = (token, page) =>{
         page
     }
 }
+
+export const orderMedicines = (token, cartId) =>{
+    return{
+        type: actionTypes.ORDER_MEDICINES,
+        token,
+        cartId
+    }
+}
+
+export const orderMedicinesStart = () => {
+    return{
+        type: actionTypes.ORDER_MEDICINES_START
+    }
+}
+
+export const orderMedicinesFail = (error) => {
+    return{
+        type: actionTypes.ORDER_MEDICINES_FAIL,
+        error
+    }
+}
+
+export const orderMedicinesSucces = () => {
+    return{
+        type: actionTypes.ORDER_MEDICINES_SUCCESS
+    }
+}

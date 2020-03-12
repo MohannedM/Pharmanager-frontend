@@ -11,7 +11,7 @@ export function* addToCartSaga(action){
                 Authorization: "Bearer " + action.token
             }
         });
-        yield put(addToCartSuccess(response.data.medicine, response.data._id, response.data.quantity, response.data.message));
+        yield put(addToCartSuccess(response.data.cart, response.data.message));
     }catch(error){
         yield put(addToCartFail(error.response.data.message));
     }
