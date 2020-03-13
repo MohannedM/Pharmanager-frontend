@@ -1,5 +1,15 @@
 import { put } from 'redux-saga/effects';
-import { getMedicinesMarketStart, getMedicinesMarketSuccess, getMedicinesMarketFail, getMedicinesMarket, orderMedicinesStart, orderMedicinesSucces, orderMedicinesFail } from '../actions';
+import { getMedicinesMarketStart,
+         getMedicinesMarketSuccess,
+         getMedicinesMarketFail,
+         getMedicinesMarket,
+         orderMedicinesStart,
+         orderMedicinesSucces,
+         orderMedicinesFail,
+         getOrdersStart,
+         getOrdersSuccess,
+         getOrdersFail
+         } from '../actions';
 import axios from 'axios';
 
 export function* getMedicinesMarketSaga(action){
@@ -23,7 +33,7 @@ export function* marketPageChangedSaga(action){
 export function* orderMedicinesSaga(action){
     yield put(orderMedicinesStart());
     try{
-        const response = yield axios.post("http://localhost:8080/orders",{cartId: action.cartId},{
+        yield axios.post("http://localhost:8080/orders",{cartId: action.cartId},{
             headers:{
                 Authorization: "Bearer " + action.token
             }
@@ -32,4 +42,19 @@ export function* orderMedicinesSaga(action){
     }catch(error){
         yield put(orderMedicinesFail(error.response.data.message))
     }
+}
+
+export function* getOrdersSaga(action){
+    yield put(getOrdersStart());
+    try{
+        const response = yield axios.get("http://localhost:8080/orders",{
+            headers: {
+                Authorization: "Bearer " + action.token
+            }
+        });
+        yield put(getOrdersSuccess(response.data.orders));
+    }catch(error){
+        yield put(getOrdersFail(error.response.data.message));
+    }
+
 }

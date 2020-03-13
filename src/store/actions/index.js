@@ -29,7 +29,11 @@ export {
     orderMedicines,
     orderMedicinesStart,
     orderMedicinesSucces,
-    orderMedicinesFail
+    orderMedicinesFail,
+    getOrders,
+    getOrdersFail,
+    getOrdersStart,
+    getOrdersSuccess
 } from './orders';
 
 export {

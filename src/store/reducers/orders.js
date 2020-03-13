@@ -5,6 +5,7 @@ const initialState = {
     loading: false,
     page: 1,
     totalMedicinesCount: null,
+    orders: [],
     error: null
 }
 
@@ -51,9 +52,27 @@ const reducer = (state = initialState, action) => {
                 loading: false,
                 error: action.error
             }
+        case actionTypes.GET_MEDICINES_MARKET_START:
+            return{
+                ...state,
+                loading: true
+            }
+        case actionTypes.GET_ORDERS_SUCCESS:
+            return{
+                ...state,
+                loading: false,
+                orders: action.orders
+            }
+        case actionTypes.GET_ORDERS_FAIL:
+            return{
+                ...state,
+                loading: false,
+                error: action.error
+            }
         case actionTypes.AUTH_CLEAR:
             return{
                 medicines: [],
+                orders: [],
                 loading: false,
                 page: 1,
                 totalMedicinesCount: null,

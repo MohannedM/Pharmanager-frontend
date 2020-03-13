@@ -70,3 +70,30 @@ export const orderMedicinesSucces = () => {
         type: actionTypes.ORDER_MEDICINES_SUCCESS
     }
 }
+
+export const getOrders = token => {
+    return{
+        type: actionTypes.GET_ORDERS,
+        token
+    }
+}
+
+export const getOrdersStart = () => {
+    return{
+        type: actionTypes.GET_ORDERS_START
+    }
+}
+
+export const getOrdersSuccess = orders => {
+    return{
+        type: actionTypes.GET_ORDERS_SUCCESS,
+        orders
+    }
+}
+
+export const getOrdersFail = error => {
+    return{
+        type: actionTypes.GET_ORDERS_FAIL,
+        error
+    }
+}
