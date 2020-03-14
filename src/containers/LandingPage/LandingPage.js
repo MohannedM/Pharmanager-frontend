@@ -16,7 +16,7 @@ class LandingPage extends Component{
                     <div className="container">
                         <h1 className="masthead-heading mb-0"><FontAwesomeIcon icon={faLaptopMedical} /> Pharmanager</h1>
                         <h2 className="masthead-subheading mb-0">Will Make Managing Your Pharmacy a Breeze</h2>
-                        <a href="#" className="btn btn-primary btn-xl rounded-pill mt-5">Learn More</a>
+                        <a href="#learnmore" className="btn btn-primary btn-xl rounded-pill mt-5">Learn More</a>
                     </div>
                     </div>
                     <div className="bg-circle-1 bg-circle"></div>

@@ -43,6 +43,7 @@ class OrderMedicine extends Component{
             return(
                 <Col  key={medicine._id} className="m-3" xs={12} lg={3}>
                     <MedicineCard 
+                    orderMedicines
                     companyType={this.props.companyType}
                     user={medicine.user}
                     medicine={medicine} 

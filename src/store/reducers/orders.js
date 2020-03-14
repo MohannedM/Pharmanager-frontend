@@ -84,7 +84,7 @@ const reducer = (state = initialState, action) => {
                 totalMedicinesCount: null,
                 orders: [],
                 error: null
-            }
+            }            
         default: return state;
     }
 }

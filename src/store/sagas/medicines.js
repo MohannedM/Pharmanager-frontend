@@ -25,7 +25,19 @@ export function* getMedicinesSaga(action){
                 Authorization: "Bearer " + action.token
             }
         });
-        yield put(getMedicinesSuccess(response.data.medicines));
+        const medicinesArr = [];
+        console.log(response)
+        response.data.medicines.forEach(medicineInfo=>{
+            if(medicineInfo.medicine){
+                if(medicineInfo.quantity){
+                    medicineInfo.medicine.availableQuantity = medicineInfo.quantity
+                }
+                medicineInfo.medicine.userMedicineId = medicineInfo._id;
+                medicinesArr.push(medicineInfo.medicine)
+            }
+            
+        });
+        yield put(getMedicinesSuccess(medicinesArr));
     }catch(error){
         if(error.response){
             yield put(getMedicinesFail(error.response.data.message));
@@ -54,7 +66,7 @@ export function* editMedicineSaga(action){
 export function* deleteMedicineSaga(action){
     yield put(getMedicinesStart());
     try{
-        yield axios.delete("http://localhost:8080/medicines/" + action.medicineId, {
+        yield axios.delete("http://localhost:8080/medicines/" + action.medicineId + '?user_medicine_id='+action.userMedicineId, {
             headers: {
                 Authorization: "Bearer " + action.token
             }

@@ -104,10 +104,11 @@ export const editMedicineFail = error => {
     }
 }
 
-export const deleteMedicine = (medicineId, token) => {
+export const deleteMedicine = (medicineId, userMedicineId, token) => {
     return {
         type: actionTypes.DELETE_MEDICINE,
         medicineId,
+        userMedicineId,
         token
     }
 }

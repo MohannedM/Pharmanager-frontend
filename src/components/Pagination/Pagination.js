@@ -10,11 +10,11 @@ class Pagination extends Component{
         const lastPage = Math.ceil(this.props.totalMedicinesCount / 9)
 
 
-        let firstPage = this.props.page !== 1 && previousPage !== 1 ? <li className="page-item" onClick={() => this.props.pageChanged(1)}><a className="page-link" href="#">1</a></li> : null;
-        let thePreviousPage = hasPrevious ? <li className="page-item" onClick={() => this.props.pageChanged(previousPage)}><a className="page-link" href="#">{previousPage}</a></li> : null;
-        let currentPage = <li className="page-item active"><a className="page-link" href="#">{this.props.page}</a></li>;
-        let theNextPage = hasNext ?  <li className="page-item" onClick={() => this.props.pageChanged(nextPage)}><a className="page-link" href="#">{nextPage}</a></li> : null;
-        let theLastPage = lastPage !== nextPage && lastPage !== this.props.page ?  <li className="page-item" onClick={() => this.props.pageChanged(lastPage)}><a className="page-link" href="#">{lastPage}</a></li> : null; 
+        let firstPage = this.props.page !== 1 && previousPage !== 1 ? <li className="page-item" onClick={() => this.props.pageChanged(1)}><a className="page-link" href="#1">1</a></li> : null;
+        let thePreviousPage = hasPrevious ? <li className="page-item" onClick={() => this.props.pageChanged(previousPage)}><a className="page-link" href={"#"+ previousPage}>{previousPage}</a></li> : null;
+        let currentPage = <li className="page-item active"><a className="page-link" href={"#"+ this.props.page}>{this.props.page}</a></li>;
+        let theNextPage = hasNext ?  <li className="page-item" onClick={() => this.props.pageChanged(nextPage)}><a className="page-link" href={"#"+ nextPage}>{nextPage}</a></li> : null;
+        let theLastPage = lastPage !== nextPage && lastPage !== this.props.page ?  <li className="page-item" onClick={() => this.props.pageChanged(lastPage)}><a className="page-link" href={"#" + lastPage}>{lastPage}</a></li> : null; 
         return(
             <Auxiliary>
                 {firstPage}

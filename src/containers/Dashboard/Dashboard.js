@@ -10,6 +10,7 @@ import { getCart } from '../../store/actions';
 import Cart from './Cart/Cart';
 import Orders from './Orders/Orders';
 import Checkout from './Checkout/Checkout';
+import NotFound from '../NotFound/NotFound';
 
 class Dashboard extends Component{
   componentDidMount(){
@@ -28,7 +29,8 @@ class Dashboard extends Component{
           <Route path="/cart" component={Cart} />
           <Route path="/orders" component={Orders} />
           <Route path="/checkout" component={Checkout} />
-          <Route path="/" component={Reports} />
+          <Route path="/" exact component={Reports} />
+          <Route path="/" component={NotFound} />
         </Switch>
       );
       if(this.props.companyType === "supplier"){
@@ -38,7 +40,8 @@ class Dashboard extends Component{
             <Route path="/medicines/edit" component={MedicineForm} />
             <Route path="/medicines" component={Medicines} />
             <Route path="/orders" component={Orders} />
-            <Route path="/" component={Reports} />
+            <Route path="/" exact component={Reports} />
+            <Route path="/" component={NotFound} />
           </Switch>
         );
       }

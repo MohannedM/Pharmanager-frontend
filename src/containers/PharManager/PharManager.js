@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import LandingPage from '../LandingPage/LandingPage';
 import asyncComponent from '../../hoc/asyncComponent/asyncComponent';
 import { connect } from 'react-redux';
 import Logout from '../Auth/Logout/Logout';
 import { authInit } from '../../store/actions';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
-// import NotFound from '../NotFound/NotFound';
+import NotFound from '../NotFound/NotFound';
 
 const Auth = asyncComponent(()=>{
   return import('../Auth/Auth');
@@ -25,18 +25,19 @@ class PharManager extends Component{
           <Route path="/login" component={Auth} />
           <Route path="/signup" component={Auth} />
           <Route path="/" exact component={LandingPage} />
-          {/* <Route path="/" component={NotFound} /> */}
-          <Redirect to="/" />
+          <Route path="/" component={NotFound} />
         </Switch>
     );
     if(this.props.isAuth){
       routes = (
         <Auxiliary>
           <Switch>
+            <Route path="/login" component={Auth} />
+            <Route path="/signup" component={Auth} />
             <Route path="/logout" component={Logout} />
             <Route path="/" component={Dashboard} />
           </Switch>
-          <Redirect to="/" />
+          {/* <Redirect to="/" /> */}
         </Auxiliary>
     );
     }

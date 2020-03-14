@@ -25,8 +25,8 @@ class Medicines extends Component{
         this.props.history.push("/medicines/edit");
     }
 
-    deleteMedicineHandler = (medicineId) => {
-        this.props.onDeleteMedicine(medicineId, this.props.token)
+    deleteMedicineHandler = (medicineId, userMedicineId) => {
+        this.props.onDeleteMedicine(medicineId, userMedicineId, this.props.token)
     }
 
     render(){
@@ -37,7 +37,7 @@ class Medicines extends Component{
                     companyType={this.props.companyType}
                     medicine={medicine} 
                     editMedicineClicked={()=>this.editMedicineHandler(medicine)}
-                    deleteMedicineClicked={()=>this.deleteMedicineHandler(medicine._id)} 
+                    deleteMedicineClicked={()=>this.deleteMedicineHandler(medicine._id, medicine.userMedicineId)} 
                     ></MedicineCard>
                 </Col>
 
@@ -74,7 +74,7 @@ const mapDispatchToProps = dispatch => {
         onGetMedicines: (token) => dispatch(getMedicines(token)),
         onDismissError: () => dispatch(medicinesDismissError()),
         onEditMedicineFields: (medicineData) => dispatch(editMedicineFeilds(medicineData)),
-        onDeleteMedicine: (medicineId, token)  => dispatch(deleteMedicine(medicineId, token))
+        onDeleteMedicine: (medicineId, userMedicineId, token)  => dispatch(deleteMedicine(medicineId, userMedicineId, token))
     }
 }
 
