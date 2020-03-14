@@ -35,6 +35,7 @@ class OrderMedicine extends Component{
     handleModalClose = () => {
         this.setState({showMedicineModal: false});
         this.setState({currentMedicine: null});
+        this.props.onDismissError();
     }
 
     render(){
@@ -66,9 +67,7 @@ class OrderMedicine extends Component{
                 <Row>
                     <Col className="align-self-center">
                         <nav aria-label="...">
-                            <ul className="pagination pagination-sm">
-                                <Pagination totalMedicinesCount={this.props.totalMedicinesCount} page={this.props.page} pageChanged={this.onPageChange} />
-                            </ul>
+                            {this.props.totalMedicinesCount ? <ul className="pagination pagination-sm"><Pagination totalMedicinesCount={this.props.totalMedicinesCount} page={this.props.page} pageChanged={this.onPageChange} /></ul> : null}
                         </nav>
                     </Col>
                 </Row>
@@ -92,7 +91,7 @@ const mapDispatchToProps = dispatch => {
     return{
         onGetMedicines: (token, page) => dispatch(getMedicinesMarket(token, page)),
         onDismissError: () => dispatch(marketMedicinesDismissError()),
-        onPageChanged: (token, page) => dispatch(marketPageChanged(token, page))
+        onPageChanged: (token, page) => dispatch(marketPageChanged(token, page)),
     }
 }
 

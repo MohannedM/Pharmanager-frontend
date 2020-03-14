@@ -8,7 +8,8 @@ import { getMedicinesMarketStart,
          orderMedicinesFail,
          getOrdersStart,
          getOrdersSuccess,
-         getOrdersFail
+         getOrdersFail,
+         getOrders
          } from '../actions';
 import axios from 'axios';
 
@@ -47,14 +48,19 @@ export function* orderMedicinesSaga(action){
 export function* getOrdersSaga(action){
     yield put(getOrdersStart());
     try{
-        const response = yield axios.get("http://localhost:8080/orders",{
+        const response = yield axios.get("http://localhost:8080/orders?page="+action.page,{
             headers: {
                 Authorization: "Bearer " + action.token
             }
         });
-        yield put(getOrdersSuccess(response.data.orders));
+        yield put(getOrdersSuccess(response.data.orders, action.page, response.data.totalCount));
     }catch(error){
         yield put(getOrdersFail(error.response.data.message));
     }
+
+}
+
+export function* ordersPageChangedSaga(action){
+    yield put(getOrders(action.token, action.page));
 
 }

@@ -33,7 +33,8 @@ export {
     getOrders,
     getOrdersFail,
     getOrdersStart,
-    getOrdersSuccess
+    getOrdersSuccess,
+    ordersPageChanged
 } from './orders';
 
 export {

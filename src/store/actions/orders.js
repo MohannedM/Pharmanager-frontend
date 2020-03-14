@@ -71,10 +71,11 @@ export const orderMedicinesSucces = () => {
     }
 }
 
-export const getOrders = token => {
+export const getOrders = (token, page) => {
     return{
         type: actionTypes.GET_ORDERS,
-        token
+        token,
+        page
     }
 }
 
@@ -84,10 +85,12 @@ export const getOrdersStart = () => {
     }
 }
 
-export const getOrdersSuccess = orders => {
+export const getOrdersSuccess = (orders, page, totalCount) => {
     return{
         type: actionTypes.GET_ORDERS_SUCCESS,
-        orders
+        orders,
+        page,
+        totalCount
     }
 }
 
@@ -95,5 +98,13 @@ export const getOrdersFail = error => {
     return{
         type: actionTypes.GET_ORDERS_FAIL,
         error
+    }
+}
+
+export const ordersPageChanged = (token, page) => {
+    return{
+        type: actionTypes.ORDERS_PAGE_CHANGED,
+        token, 
+        page
     }
 }

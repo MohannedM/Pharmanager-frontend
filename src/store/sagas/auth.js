@@ -15,7 +15,7 @@ export function* authSaga(action){
         yield localStorage.setItem("companyName", response.data.userData.companyName);
         yield localStorage.setItem("companyAddress", response.data.userData.companyAddress);
         yield localStorage.setItem("companyNumber", response.data.userData.companyNumber);
-        const expirationTime = yield new Date().getTime() + (3600 * 1000);
+        const expirationTime = yield new Date().getTime() + (3600 * 980);
         yield localStorage.setItem("expirationTime", expirationTime);
         yield put(authTimeout(expirationTime, response.data.userData.token));
 

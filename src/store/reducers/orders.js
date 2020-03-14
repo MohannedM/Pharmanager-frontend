@@ -4,6 +4,8 @@ const initialState = {
     medicines: [],
     loading: false,
     page: 1,
+    ordersPage: 1,
+    totalOrdersCount: null,
     totalMedicinesCount: null,
     orders: [],
     error: null
@@ -52,16 +54,19 @@ const reducer = (state = initialState, action) => {
                 loading: false,
                 error: action.error
             }
-        case actionTypes.GET_MEDICINES_MARKET_START:
+        case actionTypes.GET_ORDERS_START:
             return{
                 ...state,
+                orders: [],
                 loading: true
             }
         case actionTypes.GET_ORDERS_SUCCESS:
             return{
                 ...state,
                 loading: false,
-                orders: action.orders
+                ordersPage: action.page,
+                orders: action.orders,
+                totalOrdersCount: action.totalCount
             }
         case actionTypes.GET_ORDERS_FAIL:
             return{
@@ -72,10 +77,12 @@ const reducer = (state = initialState, action) => {
         case actionTypes.AUTH_CLEAR:
             return{
                 medicines: [],
-                orders: [],
                 loading: false,
                 page: 1,
+                ordersPage: 1,
+                totalOrdersCount: null,
                 totalMedicinesCount: null,
+                orders: [],
                 error: null
             }
         default: return state;

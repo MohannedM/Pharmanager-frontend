@@ -69,7 +69,7 @@ const reducer = (state = initialState, action) => {
             }
         case actionTypes.DELETE_CART_ITEM_SUCCESS:
             const cartItems = [];
-            state.cart.forEach(item=> {
+            state.cart.medicines.forEach(item=> {
                 if(item._id !== action.cartItemId){
                     cartItems.push(item);
                 }
@@ -77,7 +77,7 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 loadingItem: false,
-                cart: cartItems,
+                cart: {...state.cart, medicines: cartItems},
                 successMessage: action.message
             }
         case actionTypes.DELETE_CART_ITEM_FAIL:
