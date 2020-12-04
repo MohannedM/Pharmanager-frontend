@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import authReducers from './reducers/auth';
 import medicinesReducers from './reducers/medicines';
-import ordersReducers from './reducers/orders';
+import ordersReducers from './reducers/orders'
 import cartReducers from './reducers/cart';
 import createReduxSagaMiddleware from 'redux-saga';
 import { rootAuthSaga, rootMedicineSaga, rootOrdersSaga, rootCartSaga } from './sagas';
